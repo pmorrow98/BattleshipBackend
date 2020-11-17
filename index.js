@@ -8,8 +8,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // API
-const users = require('./users.js');
-app.use('/users', users);
+const usersApi = require('./users.js');
+app.use('/api', usersApi);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
