@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // API
-const users = require('/users');
+const users = require('./users.js');
 app.use('/users', users);
 
 const port = process.env.PORT || 5000;
