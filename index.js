@@ -18,6 +18,8 @@ app.use(expressSession({
 const MongoClient = require('mongodb').MongoClient
 const connectionString = 'mongodb+srv://battleship:comp426@cluster0.fqc7a.mongodb.net/<dbname>?retryWrites=true&w=majority';
 
+console.log("app running");
+
 MongoClient.connect(connectionString, { useUnifiedTopology: true })
   .then(client => {
     console.log('Connected to Database')
