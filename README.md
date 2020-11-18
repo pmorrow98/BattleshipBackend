@@ -36,6 +36,7 @@
     - gamesPlayed (int)
     - wins (int)
     - losses (int)
+    - shipsSunk (int)
   - Response: Responds with Responds with an object in JSON format representing the updated profile
   
 - Delete User Profile by Username:
