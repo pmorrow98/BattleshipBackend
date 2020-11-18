@@ -37,7 +37,7 @@
     - wins (int)
     - losses (int)
     - shipsSunk (int)
-  - Response: Responds with Responds with an object in JSON format representing the updated profile
+  - Response: Responds with an object in JSON format representing the updated profile
   
 - Delete User Profile by Username:
   - PUT https://battleshipcomp426.herokuapp.com/api/user/:username (replace :username with the username of the profile to delete)
