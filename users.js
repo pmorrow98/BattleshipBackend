@@ -3,15 +3,6 @@ const router = express.Router()
 
 const UserProfile = require('./UserProfile');
 
-const expressSession = require('express-session');
-
-router.use(expressSession({
-    name: "battleshipCookie",
-    secret: "comp426",
-    resave: false,
-    saveUninitialized: false
-}));
-
 const MongoClient = require('mongodb').MongoClient
 const connectionString = 'mongodb+srv://battleship:comp426@cluster0.fqc7a.mongodb.net/<dbname>?retryWrites=true&w=majority';
 
@@ -23,19 +14,29 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     const userCollection = db.collection('users');
 
     router.post('/login', (req, res) => {
+
         let {username, password} = req.body;
 
         userCollection.findOne({username: username}).then(result => {
+            if(result == null) {
+                res.status(404).send("Not found");
+                return;
+            }
+
             if(result.password == password) {
-                console.log("Logged in!");
                 req.session.user = username;
-                console.log(req.session.user);
                 res.json(true);
                 return;
-            } else {
-                res.status(403).send("Unauthorized");
-            }
+            } 
+
+            res.status(403).send("Unauthorized");
+            
         }).catch(error => console.error(error));
+    });
+
+    router.get('/logout', (req, res) => {
+        delete req.session.user;
+        res.json(true);
     });
 
     // Create new user
@@ -43,48 +44,111 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         let {username, password} = req.body;
     
         let user = new UserProfile(username, password);
+
+        if (user == null) {
+            res.status(400).send("Bad Request");
+            return;
+        }
     
         userCollection.insertOne(user).then(result => {
-            console.log(result)
+            res.json(true);
+            return;
           }).catch(error => console.error(error));
     });
 
     // Get all user profiles
     router.get('/user', (req, res) => {
+        if (req.session.user == undefined) {
+            res.status(403).send("Unauthorized");
+            return;
+        }
+
         userCollection.find().toArray().then(result => {
-            console.log(req.session.user);
             res.json(result);
+            return;
         }).catch(error => console.error(error));
     });
 
     // Get user profile by username
     router.get('/user/:username', (req, res) => {
+        if (req.session.user == undefined) {
+            res.status(403).send("Unauthorized");
+            return;
+        }
+
         const username = req.params.username;
 
         userCollection.findOne({username: username}).then(result => {
-            console.log(result)
+            if (result == null) {
+                res.status(404).send("Not found");
+                return;
+            }
+
+            res.json(result);
         }).catch(error => console.error(error));
     });
 
     // Delete profile by username
     router.delete('/user/:username', (req, res) => {
+        if (req.session.user == undefined) {
+            res.status(403).send("Unauthorized");
+            return;
+        }
+
         const username = req.params.username;
 
         userCollection.deleteOne({username: username}).then(result => {
-            console.log(result)
+            res.json(true);
+            return;
         }).catch(error => console.error(error));
     });
 
     // Update user profile
     router.put('/user/:username', (req, res) => {
-        const username = req.params.username;
+        if (req.session.user == undefined) {
+            res.status(403).send("Unauthorized");
+            return;
+        }
 
-        userCollection.updateOne({username: username}, {$set: new UserProfile("carson is soft", "peter is genius")}).then(result => {
-            console.log("success")
-        }).catch(error => console.log(error));
+        const user = req.params.username;
+
+        userCollection.findOne({username: user}).then(result => {
+            if (result == null) {
+                res.status(404).send("Not found");
+                return;
+            }
+
+            let {username, password, wins, losses, shipsSunk, gamesPlayed} = req.body;
+            
+            if(username != null) {
+                result.username = username;
+            }
+            if(password != null) {
+                result.password = password;
+            }
+            if(gamesPlayed != null) {
+                result.gamesPlayed = gamesPlayed;
+            }
+            if(wins != null) {
+                result.wins = wins;
+            }
+            if(losses != null) {
+                result.losses = losses;
+            }
+            if(shipsSunk != null) {
+                result.shipsSunk = shipsSunk;
+            }
+
+            let updated = result;
+
+            userCollection.updateOne({username: user}, {$set: updated}).then(result => {
+                res.json(updated);
+                return;
+            }).catch(error => console.log(error));
+
+        }).catch(error => console.error(error));
     });
 
   }).catch(error => console.error(error));
-
 
 module.exports = router;

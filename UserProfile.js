@@ -2,6 +2,7 @@ class UserProfile {
     constructor(username, password) {
         this.username = username;
         this.password = password;
+        this.gamesPlayed = 0;
         this.wins = 0;
         this.losses = 0;
         this.shipsSunk = 0;
