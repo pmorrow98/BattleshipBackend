@@ -58,10 +58,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
     // Get all user profiles
     router.get('/user', (req, res) => {
-        if (req.session.user == undefined) {
+        /* if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
-        }
+        } */
 
         userCollection.find().toArray().then(result => {
             res.json(result);
@@ -71,10 +71,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
     // Get user profile by username
     router.get('/user/:username', (req, res) => {
-        if (req.session.user == undefined) {
+        /* if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
-        }
+        } */
 
         const username = req.params.username;
 
@@ -90,10 +90,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
     // Delete profile by username
     router.delete('/user/:username', (req, res) => {
-        if (req.session.user == undefined) {
+        /* if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
-        }
+        } */
 
         const username = req.params.username;
 
@@ -105,10 +105,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
     // Update user profile
     router.put('/user/:username', (req, res) => {
-        if (req.session.user == undefined) {
+        /* if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
-        }
+        } */
 
         const user = req.params.username;
 
