@@ -29,7 +29,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
                 return;
             } 
 
-            res.status(403).send("Unauthorized");
+            res.json(false);
             
         }).catch(error => console.error(error));
     });
