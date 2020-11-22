@@ -7,7 +7,7 @@
   - Response: Responds with true upon a successful login
   
 - Logout:
-  - POST https://battleshipcomp426.herokuapp.com/api/logout
+  - GET https://battleshipcomp426.herokuapp.com/api/logout
   - Request Params: None
   - Response: Responds with true upon a successful logoff
   
