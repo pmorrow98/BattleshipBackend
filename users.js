@@ -58,23 +58,22 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
     // Get all user profiles
     router.get('/user', (req, res) => {
-        /* if (req.session.user == undefined) {
-            res.status(403).send("Unauthorized");
-            return;
-        } */
-
         userCollection.find().toArray().then(result => {
-            res.json(result);
+
+            //filter out passwords from returned data
+            let returnArray = result.map(user => user.data);
+
+            res.json(returnArray);
             return;
         }).catch(error => console.error(error));
     });
 
     // Get user profile by username
     router.get('/user/:username', (req, res) => {
-        /* if (req.session.user == undefined) {
+        if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
-        } */
+        } 
 
         const username = req.params.username;
 
@@ -84,16 +83,16 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
                 return;
             }
 
-            res.json(result);
+            res.json(result.data);
         }).catch(error => console.error(error));
     });
 
     // Delete profile by username
     router.delete('/user/:username', (req, res) => {
-        /* if (req.session.user == undefined) {
+        if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
-        } */
+        }
 
         const username = req.params.username;
 
@@ -105,10 +104,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
     // Update user profile
     router.put('/user/:username', (req, res) => {
-        /* if (req.session.user == undefined) {
+        if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
-        } */
+        }
 
         const user = req.params.username;
 
@@ -127,16 +126,16 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
                 result.password = password;
             }
             if(gamesPlayed != null) {
-                result.gamesPlayed = gamesPlayed;
+                result.data.gamesPlayed = gamesPlayed;
             }
             if(wins != null) {
-                result.wins = wins;
+                result.data.wins = wins;
             }
             if(losses != null) {
-                result.losses = losses;
+                result.data.losses = losses;
             }
             if(shipsSunk != null) {
-                result.shipsSunk = shipsSunk;
+                result.data.shipsSunk = shipsSunk;
             }
 
             let updated = result;
