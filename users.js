@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
 
 const UserProfile = require('./UserProfile');
 
@@ -66,6 +66,10 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
             res.json(returnArray);
             return;
         }).catch(error => console.error(error));
+    });
+
+    router.get('/cookie', (req, res) => {
+        res.json(res.session.user);
     });
 
     // Get user profile by username
