@@ -41,7 +41,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
             if(result.password == password) {
                 req.session.user = result.username;
-                console.log("Login success: " + req.session);
+                console.log("Login success: ");
+                console.log(req.session);
                 res.json(true);
                 return;
             } 
@@ -87,7 +88,8 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
     // Get user profile by username
     app.get('/api/user/:username', (req, res) => {
-        console.log("GET user: " + req.session);
+        console.log("GET user: ");
+        console.log(req.session);
         if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
