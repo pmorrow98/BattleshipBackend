@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 let corsOptions = {
-    origin: 'http://localhost:3001',
+    origin: 'http://localhost:3000',
     credentials: true,
 }
 
@@ -21,7 +21,7 @@ app.use(expressSession({
     cookie: { secure: true, sameSite: 'none'},
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({url: 'mongodb+srv://battleship:comp426@cluster0.fqc7a.mongodb.net/battleship?retryWrites=true&w=majority'})
+    // store: new MongoStore({url: 'mongodb+srv://battleship:comp426@cluster0.fqc7a.mongodb.net/battleship?retryWrites=true&w=majority'})
 }));
 
 const usersApi = require('./users.js');
