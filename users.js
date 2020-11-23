@@ -69,7 +69,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     });
 
     router.get('/cookie', (req, res) => {
-        res.json(res.session.user);
+        res.json(res.session);
     });
 
     // Get user profile by username
