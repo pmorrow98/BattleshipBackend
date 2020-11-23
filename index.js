@@ -10,8 +10,9 @@ app.enable('trust proxy');
 app.use(expressSession({
     name: "battleshipComp426",
     secret: "express session secret",
+    cookie: { secure: false },
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
 
 // const usersApi = require('./users.js');
