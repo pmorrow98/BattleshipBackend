@@ -4,7 +4,7 @@
   - Request Params:
     - username (string)
     - password (string)
-  - Response: Responds with true upon a successful login
+  - Response: Responds with true upon a successful login, false for incorrect password, and a 404 error is user does not exist.
   
 - Logout:
   - GET https://battleshipcomp426.herokuapp.com/api/logout
@@ -45,9 +45,7 @@
   - Response: Responds with true upon successful deletion
   
  
-  
-  
-  
+ The CRUD endpoints for accessing user profile data respond with a 403 unauthorized error if user is not logged in.
   
   
   
