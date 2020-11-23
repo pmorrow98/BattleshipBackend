@@ -29,7 +29,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     const db = client.db("battleship");
     const userCollection = db.collection('users');
 
-    app.post('/login', (req, res) => {
+    app.post('/api/login', (req, res) => {
 
         let {username, password} = req.body;
 
@@ -50,13 +50,13 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         }).catch(error => console.error(error));
     });
 
-    app.get('/logout', (req, res) => {
+    app.get('/api/logout', (req, res) => {
         delete req.session.user;
         res.json(true);
     });
 
     // Create new user
-    app.post('/user', (req, res) => {
+    app.post('/api/user', (req, res) => {
         let {username, password} = req.body;
     
         let user = new UserProfile(username, password);
@@ -73,7 +73,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     });
 
     // Get all user profiles
-    app.get('/user', (req, res) => {
+    app.get('/api/user', (req, res) => {
         userCollection.find().toArray().then(result => {
 
             //filter out passwords from returned data
@@ -89,7 +89,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     });
 
     // Get user profile by username
-    app.get('/user/:username', (req, res) => {
+    app.get('/api/user/:username', (req, res) => {
         console.log(req.session);
         if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
@@ -109,7 +109,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     });
 
     // Delete profile by username
-    app.delete('/user/:username', (req, res) => {
+    app.delete('/api/user/:username', (req, res) => {
         if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
@@ -124,7 +124,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     });
 
     // Update user profile
-    app.put('/user/:username', (req, res) => {
+    app.put('/api/user/:username', (req, res) => {
         if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
