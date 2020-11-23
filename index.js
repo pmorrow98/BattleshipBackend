@@ -11,7 +11,7 @@ app.use(expressSession({
     name: "battleshipComp426",
     secret: "express session secret",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true
 }));
 
 // const usersApi = require('./users.js');
