@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const expressSession = require('express-session');
+const MongoStore = require('connect-mongo')(expressSession);
 const app = express();
 
 app.use(bodyParser.json());
@@ -16,9 +17,10 @@ app.enable('trust proxy');
 app.use(expressSession({
     name: "battleshipComp426",
     secret: "express session secret",
-    cookie: { secure: false, sameSite: false},
+    cookie: { secure: false},
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new MongoStore({url: 'mongodb+srv://battleship:comp426@cluster0.fqc7a.mongodb.net/battleship?retryWrites=true&w=majority'})
 }));
 
 // const usersApi = require('./users.js');
