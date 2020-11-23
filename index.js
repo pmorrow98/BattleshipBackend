@@ -11,7 +11,7 @@ app.use(expressSession({
     name: "battleshipComp426",
     secret: "express session secret",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true
 }));
 
 // const usersApi = require('./users.js');
@@ -41,6 +41,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
             if(result.password == password) {
                 req.session.user = result.username;
+                console.log("Login success: " + req.session);
                 res.json(true);
                 return;
             } 
@@ -84,13 +85,9 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         }).catch(error => console.error(error));
     });
 
-    app.get('/cookie', (req, res) => {
-        res.json(req.session);
-    });
-
     // Get user profile by username
     app.get('/api/user/:username', (req, res) => {
-        console.log(req.session);
+        console.log("GET user: " + req.session);
         if (req.session.user == undefined) {
             res.status(403).send("Unauthorized");
             return;
