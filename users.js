@@ -13,6 +13,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
     const db = client.db("battleship");
     const userCollection = db.collection('users');
 
+    // Login endpoint
     router.post('/login', (req, res) => {
 
         let {username, password} = req.body;
@@ -34,6 +35,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
         }).catch(error => console.error(error));
     });
 
+    // Logout endpoint
     router.get('/logout', (req, res) => {
         delete req.session.user;
         res.json(true);
