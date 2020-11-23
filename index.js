@@ -17,7 +17,7 @@ app.enable('trust proxy');
 app.use(expressSession({
     name: "battleshipComp426",
     secret: "express session secret",
-    cookie: { secure: false, sameSite: 'none'},
+    cookie: { secure: true, proxy: true},
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({url: 'mongodb+srv://battleship:comp426@cluster0.fqc7a.mongodb.net/battleship?retryWrites=true&w=majority'})
