@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 
 let corsOptions = {
     origin: 'https://pmorrow98.github.io',
+    credentials: true,
 }
 
 app.use(cors(corsOptions));
