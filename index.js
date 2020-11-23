@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 let corsOptions = {
-    origin: 'https://pmorrow98.github.io/Battleship/',
+    origin: 'https://pmorrow98.github.io',
 }
 
 app.use(cors(corsOptions));
