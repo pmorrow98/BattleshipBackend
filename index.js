@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 let corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://pmorrow98.github.io',
     credentials: true,
 }
 
