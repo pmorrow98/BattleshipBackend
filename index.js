@@ -5,12 +5,16 @@ const expressSession = require('express-session');
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors());
+
+let corsOptions = {
+    origin: 'https://pmorrow98.github.io/Battleship/',
+}
+
+app.use(cors(corsOptions));
 app.enable('trust proxy');
 app.use(expressSession({
     name: "battleshipComp426",
     secret: "express session secret",
-    cookie: { secure: false },
     resave: false,
     saveUninitialized: false
 }));
